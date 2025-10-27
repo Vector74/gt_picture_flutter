@@ -7,10 +7,11 @@ import '../components/main_app_bar.dart'; // Import MainAppBar
 import 'gt_image_screen.dart'; // Import GTImageScreen
 
 class GTFoldersScreen extends StatefulWidget {
-  const GTFoldersScreen({Key? key}) : super(key: key);
+  const GTFoldersScreen({super.key});
 
-  @override
-  _GTFoldersScreenState createState() => _GTFoldersScreenState();
+   @override
+  State<GTFoldersScreen> createState() => _GTFoldersScreenState();
+
 }
 
 class _GTFoldersScreenState extends State<GTFoldersScreen> {

@@ -7,8 +7,10 @@ import '../components/main_app_bar.dart'; // Importáljuk a MainAppBar-t
 import '../utils/core_util.dart'; // Importáljuk a CoreUtil-t
 
 class GTImageScreen extends StatefulWidget {
-  @override
-  _GTImageScreenState createState() => _GTImageScreenState();
+  const GTImageScreen({super.key});
+
+   @override
+  State<GTImageScreen> createState() => _GTImageScreenState();
 }
 
 class _GTImageScreenState extends State<GTImageScreen> {

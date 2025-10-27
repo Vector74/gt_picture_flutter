@@ -1,16 +1,21 @@
 # gt_picture
 
-A new Flutter project.
+Ez egy új Flutter projekt.
 
-## Getting Started
+## A projekt célja
 
-This project is a starting point for a Flutter application.
+Ez az alkalmazás egy Flutter alapú mobil alkalmazás, amely célja, hogy könnyen kezelhető felületet biztosítson a felhasználók számára a képek megjelenítésére és kezelésére. Az alkalmazás képes NFC-s azonosításra, amely lehetővé teszi a felhasználók számára, hogy gyorsan és egyszerűen bejelentkezzenek a saját eszközeikkel.
 
-A few resources to get you started if this is your first Flutter project:
+## Főbb Funkciók
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Felhasználói bejelentkezés NFC segítségével**: Az alkalmazás képes NFC címkék használatára a bejelentkezési folyamat során.
+- **Képek kezelése**: Képek készítése a készülék kamerájával, valamint ezeknek a képeknek a beküldése és törlése.
+- **Mappák kezelése**: Mappák listájának megjelenítése és a kiválasztott mappa kezelésének lehetősége.
+## API Végpontok
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Az alkalmazás RESTful API-t használ, amely a következő végpontokat tartalmazza:
+
+### 1. Felhasználó bejelentkezése
+- **POST /api/login**
+  Kérés:
+
