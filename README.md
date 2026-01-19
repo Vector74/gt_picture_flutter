@@ -19,3 +19,5 @@ Az alkalmazás RESTful API-t használ, amely a következő végpontokat tartalma
 - **POST /api/login**
   Kérés:
 
+
+

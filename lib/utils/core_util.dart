@@ -138,16 +138,19 @@ class CoreUtil {
   // Új metódus a base64 kódolt képek küldéséhez
   Future<List<MainResponse>> sendImages(List<String> capturedImages) async {
     List<MainResponse> responses = []; // Lista a válaszok tárolására
-    final List<http.MultipartFile> multipartFiles = [];
+    List<http.MultipartFile> multipartFiles = [];
 
+    int i = 0;
     for (String image in capturedImages) {
       // Fájlnév generálása a megadott formátum szerint
+      i++;
+      multipartFiles = [];
       final now = DateTime.now();
       final formattedDate =
           "${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}"
           "${now.hour.toString().padLeft(2, '0')}${now.minute.toString().padLeft(2, '0')}${now.second.toString().padLeft(2, '0')}";
       final filename =
-          "image_${GlobalVars.selectedItem?.id.toString() ?? '0'}_${GlobalVars.selectedFolder?.id.toString() ?? '0'}_$formattedDate.jpg";
+          "image_${i}_${GlobalVars.selectedItem?.id.toString() ?? '0'}_${GlobalVars.selectedFolder?.id.toString() ?? '0'}_$formattedDate.jpg";
       final multipartFile = await http.MultipartFile.fromPath(
         'files', // A paraméter neve, amit a szerver vár
         image,
@@ -155,39 +158,40 @@ class CoreUtil {
         contentType: MediaType('image', 'jpeg'),
       );
       multipartFiles.add(multipartFile);
-    }
-    // MultipartData változó létrehozása további mezőkkel
-    final multipartData = {
-      'id': GlobalVars.selectedItem?.id.toString() ?? '0',
-      'folderid': GlobalVars.selectedFolder?.id.toString() ?? '0',
-      'userid': GlobalVars.currentUser?.id.toString() ?? '0',
-    };
 
-    // API hívás végrehajtása multipart formátumban
-    final response = await callApiWithMultipart(
-      'imgupload',
-      multipartData,
-      multipartFiles,
-    );
+      // MultipartData változó létrehozása további mezőkkel
+      final multipartData = {
+        'id': GlobalVars.selectedItem?.id.toString() ?? '0',
+        'folderid': GlobalVars.selectedFolder?.id.toString() ?? '0',
+        'userid': GlobalVars.currentUser?.id.toString() ?? '0',
+      };
 
-    if (response.statusCode == 200) {
-      // JSON válasz dekódolása
-      var a = await response.stream.bytesToString();
-      final jsonResponse = jsonDecode(a);
-      // Válasz hozzáadása a listához
-      responses.add(
-        MainResponse(
-          status: jsonResponse['status'],
-          message: jsonResponse['message'],
-          data: {}, // Nincs szükség adatfeldolgozásra
-          command: jsonResponse['command'],
-        ),
+      // API hívás végrehajtása multipart formátumban
+      final response = await callApiWithMultipart(
+        'imgupload',
+        multipartData,
+        multipartFiles,
       );
-    } else {
-      // Kivétel dobása, ha a kép küldése sikertelen
-      throw Exception('Kép küldése sikertelen: ${response.statusCode}');
-    }
 
+      if (response.statusCode == 200) {
+        // JSON válasz dekódolása
+        var a = await response.stream.bytesToString();
+        final jsonResponse = jsonDecode(a);
+        // Válasz hozzáadása a listához
+        responses.add(
+          MainResponse(
+            status: jsonResponse['status'],
+            message: jsonResponse['message'],
+            data: {}, // Nincs szükség adatfeldolgozásra
+            command: jsonResponse['command'],
+          ),
+        );
+      } else {
+        // Kivétel dobása, ha a kép küldése sikertelen
+        throw Exception('Kép küldése sikertelen: ${response.statusCode}');
+      }
+    }
+    
     return responses; // Visszatér a válaszok listájával
   }
 }
