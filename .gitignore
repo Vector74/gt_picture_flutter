@@ -45,4 +45,4 @@ app.*.map.json
 /android/app/release
 .qodo
 
-/assets/appsettings.json
+# /assets/appsettings.json
